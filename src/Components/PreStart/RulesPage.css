@@ -1,0 +1,32 @@
+.rules-page {
+  height: fit-content;
+  width: fit-content;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #fbefd8;
+  color: black;
+}
+
+.rules-section {
+  margin-top: 1rem;
+}
+
+.rules-example {
+  height: 100px;
+  width: 100px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAAAXNSR0IArs4c6QAAA8hJREFUeF7tnb1LW1EYxp+bT28+6kdBi1WxUGq2FqVC3dqpQ0enLu3af0JwcXEoCM7uXbo4OGawoINgaUoVFF0MiaRBSdSbm9zcck5Rmup4zhshzxkV3ofzy3PPec+9T26chYWFEEIjm81idNTH3NwXTE5+F1FtNFzk8x+1ltLNZn+L6BaLz5DPf0CxmECtVoND0Ha4EzQdbcdZXDq4RttxlqrKzdAe247KBE3Qxgmw62DXYdxUuiC7DnYddpzFroP3Oqw4i5shN0MrxuJmyNukdoylq/JkaBHuv6UJmqCNE2DXwa7DuKl4BOfDWTumuqnKzdAy4OvyBE3Qxgmw6+hW17G4uCiWVMpkMhgZaWJ6eh1jY7+Mu+iugr7fh62tef2vmZl1pNNnIrrl8hNsb8+jXI6jXq/DWVlZEQMdjUaRTIZ48OAUfX11kQm321GcnT3SWv39p4hGmyK6vp/Suo2GgyAI4GxsfBIDrYTr9SEMDZ0glToXmbACXalMaC2lG4v5Irqel9G6nueg1WrB8TxXDPTu7lscHMxidvYrJiZ+iEzY911sbr7XWko3k6mK6JZKT7VuqRT/G3IMQ4iB3tl5h/39V72ZJiVoOwa/1d4RNEEbIXBvch10tJHP81YRLh3dOhnS0XS0EQJco3ste8elw8iFw82QSweXDjuXkqrKex322HZUJmiCNk6AJ0OeDI2bShdk18Guw46z2HXwUZYVZ3Ez5GZoxVjcDHvuy0K8e2fnSuIazTXajrPuzYHl6Oi5WFLp8PAlTk6mkMt9w/DwkR2y/1VtNpMoFN7ov+Zym3DdmohutfoYhcJrVKsxXF1dwVlb+ywGOgjiCIIoYrEmIpFAZMJhqEKGCa2lAo6OIzPddjuidZV+GIZwlpeXZZQBJJNJZLMBxsd/YmCgJAK61Yrj+PgFKpWHaDQaaLfbIroqouy6LprNptbtmTc57u1N4fz8XGeVJUYikcDg4CAuLy9765WZBG3ZXtddB0ETtHkC3fyeIR1t/vPsqMilQ/gJCx1NR5snwDXaPNM7KxI0QRsnwJMhj+DGTdURoGHXYYfvTVX20eyj7VmMXYc9th2VCZqgjRNge8f2zrip2N51402O7KPtGJl9dLd+OJKOpqPNE2AfbZ4p70czQNOlpBKzd3Yu51vZu9XVVbGQYyQSgeM4OmioEpZSQ+mqoTSldNU8la7SU/N1lpaWxGas0pUqUaqCf74v845QNWH1ll81Li4uxNKk8Xgc6XRaJ0l1Plr6d8FTqZROdXqeJ2JoBVqlOtXoZpr0D+Fm5dqwSLEmAAAAAElFTkSuQmCC");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.rules-iterations {
+    height: 100px;
+    width: 100px;
+    background: url("https://image.shutterstock.com/image-vector/digital-clock-number-3-led-260nw-1701405331.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  

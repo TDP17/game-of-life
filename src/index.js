@@ -1,17 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
 import './index.css';
+
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Game from './Components/PostStart/Game';
+import Free from './Components/Free/Free';
+
+import { LevelContextProvider } from './Components/utils/LevelContext';
+import { IterationContextProvider } from './Components/utils/IterationContextProvider';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter >
+    <LevelContextProvider>
+      <IterationContextProvider>
+        <Routes>
+          <Route path="/" exact element={<App />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/free" element={<Free />} />
+        </Routes>
+      </IterationContextProvider>
+    </LevelContextProvider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

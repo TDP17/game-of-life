@@ -1,0 +1,37 @@
+.level {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.level-grid-container {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  background-color: #dedede;
+  overflow: scroll;
+}
+
+.level-grid {
+  aspect-ratio: 1/1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.grid-row {
+  height: 100%;
+  width: 100%;
+}
+
+@media screen and (max-width: 710px) {
+  .level{
+    flex-direction: column;
+  }
+
+  .level-grid-container{
+    width: 100%;
+  }
+}
