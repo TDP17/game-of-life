@@ -3,15 +3,15 @@ CSGU - cellStateGridUpdate function
 */
 import Cell from '../Game/Cell.js';
 
-// Created a blank grid which serves as a canvas and stores it in grid
-// Returns the grid
-export const createBlankGrid = (rows, columns, cellStateGrid, neighbourCountGrid) => {
+import { gridBoundaries } from './GridBoundaries.js';
+
+// Created a blank grid which serves as a canvas and returns it
+export const createBlankGrid = (rows, columns, cellStateGrid, flag, setFlag) => {
     const grid = [];
     for (let i = 0; i < rows; i++) {
         const currentRow = [];
-        for (let j = 0; j < columns; j++) {
-            currentRow.push(<Cell key={Math.random()} i={i} j={j} cellStateGrid={cellStateGrid} />);
-        }
+        for (let j = 0; j < columns; j++)
+            currentRow.push(<Cell key={Math.random()} i={i} j={j} cellStateGrid={cellStateGrid} flag={flag} setFlag={setFlag} />);
         grid.push(currentRow);
     }
     return grid;
@@ -48,7 +48,6 @@ export const createNeighbourCountGrid = (rows, columns) => {
 }
 
 // This section is very, very ugly and slow but works, refactor someday
-// Definitely change running this on every click to running on every start game and eval only "on" cells instead - will do for now
 const incrementNeighbour = (neighbourCountGrid, x, y) => {
     if (neighbourCountGrid[x] !== undefined)
         if (neighbourCountGrid[x][y] !== undefined)
@@ -85,13 +84,17 @@ const decrementNeighbours = (neighbourCountGrid, i, j) => {
 
 /* 
 Should be fired only once when the button is clicked for the first time
-Otherwise csgu function takes care of updating cellstate and neighbourcount grids
-*/ 
-var fired = false;
+Otherwise csgu function takes care of updating cellstate and neighbour count grids
+*/
+let fired = false;
 export const countNeighbours = (rows, columns, cellStateGrid, neighbourCountGrid) => {
+    const iStart = (gridBoundaries.top - 1) < 0 ? 0 : (gridBoundaries.top - 1), 
+    iEnd = (gridBoundaries.bottom + 1) > rows - 1 ? rows - 1 : (gridBoundaries.bottom + 1), 
+    jStart = (gridBoundaries.left - 1) < 0 ? 0 : (gridBoundaries.left - 1), 
+    jEnd = (gridBoundaries.right + 1) > columns - 1 ? columns - 1 : (gridBoundaries.right + 1);
     if (!fired) {
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < columns; j++) {
+        for (let i = iStart; i <= iEnd; i++) {
+            for (let j = jStart; j <= jEnd; j++) {
                 if (cellStateGrid[i][j]) {
                     incrementNeighbours(neighbourCountGrid, i, j);
                 }
@@ -103,11 +106,18 @@ export const countNeighbours = (rows, columns, cellStateGrid, neighbourCountGrid
 
 // O(n^2) look into boxing the live cells and then searching in vicinity --> O(nlogn)?
 export const cellStateGridUpdate = (rows, columns, cellStateGrid, neighbourCountGrid) => {
+    console.log(neighbourCountGrid);
+
+    const iStart = (gridBoundaries.top - 1) < 0 ? 0 : (gridBoundaries.top - 1), 
+    iEnd = (gridBoundaries.bottom + 1) > rows - 1 ? rows - 1 : (gridBoundaries.bottom + 1), 
+    jStart = (gridBoundaries.left - 1) < 0 ? 0 : (gridBoundaries.left - 1), 
+    jEnd = (gridBoundaries.right + 1) > columns - 1 ? columns - 1 : (gridBoundaries.right + 1);
+
     const incPair = [];
     const decPair = [];
 
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
+    for (let i = iStart; i <= iEnd; i++) {
+        for (let j = jStart; j <= jEnd; j++) {
             if (!cellStateGrid[i][j] && neighbourCountGrid[i][j] === 3) {
                 cellStateGrid[i][j] = true;
                 incPair.push({ i, j });

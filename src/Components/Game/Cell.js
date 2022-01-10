@@ -6,27 +6,45 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import IterationContext from '../utils/IterationContextProvider.js';
 
+import { gridBoundaries } from '../utils/GridBoundaries.js';
+
 import './Cell.css'
 
-const Cell = ({ i, j, cellStateGrid }) => {
+const Cell = ({ i, j, cellStateGrid, flag, setFlag }) => {
     console.log("Cell reval");
     const [on, setOn] = useState(false);
     const { iteration } = useContext(IterationContext);
 
     const handleCellClick = () => {
+        if(!flag)
+        {
+            gridBoundaries.left = j;
+            gridBoundaries.top = i;
+            setFlag(true);
+        }
         // if (cellStateGrid[i][j])
         //     countNeighbours(false, i, j, neighbourCountGrid);
         // else
         //     countNeighbours(true, i, j, neighbourCountGrid);
+        if (!on) {
+            if (gridBoundaries.left > j)
+                gridBoundaries.left = j;
+            if (gridBoundaries.right < j)
+                gridBoundaries.right = j;
+            if (gridBoundaries.top > i)
+                gridBoundaries.top = i;
+            if (gridBoundaries.bottom < i)
+                gridBoundaries.bottom = i;
+        }
 
         setOn(prev => !prev);
         cellStateGrid[i][j] = !cellStateGrid[i][j];
     }
 
     useEffect(() => {
-        if(cellStateGrid[i][j])
+        if (cellStateGrid[i][j])
             setOn(true);
-        else 
+        else
             setOn(false);
     }, [cellStateGrid, i, j, iteration]);
 

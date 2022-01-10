@@ -12,34 +12,37 @@ import './Free.css';
 
 const Free = () => {
     console.log("Free reval");
+    const [flag, setFlag] = useState(false);
     const [intervalId, setIntervalId] = useState(0);
 
     const { nextIteration } = useContext(IterationContext);
 
-    const rows = 50;
-    const columns = 50;
+    const rows = 5;
+    const columns = 5;
 
     const cellStateGrid = useMemo(() => createCellStateGrid(rows, columns), [])
     const neighbourCountGrid = useMemo(() => createNeighbourCountGrid(rows, columns), [])
 
-    const grid = useMemo(() => createBlankGrid(rows, columns, cellStateGrid, neighbourCountGrid), [cellStateGrid, neighbourCountGrid])
+    const grid = useMemo(() => createBlankGrid(rows, columns, cellStateGrid, flag, setFlag), [cellStateGrid, flag])
 
     const startFreeFns = () => {
         countNeighbours(rows, columns, cellStateGrid, neighbourCountGrid);
         cellStateGridUpdate(rows, columns, cellStateGrid, neighbourCountGrid);
+        console.log(neighbourCountGrid);
         nextIteration();
     }
 
     const startFree = () => {
-        if (intervalId) {
-            clearInterval(intervalId);
-            setIntervalId(0);
-            return;
-        }
-        const newIntervalId = setInterval(() => {
-            startFreeFns();
-        }, 500);
-        setIntervalId(newIntervalId);
+        startFreeFns();
+        // if (intervalId) {
+        //     clearInterval(intervalId);
+        //     setIntervalId(0);
+        //     return;
+        // }
+        // const newIntervalId = setInterval(() => {
+        //     startFreeFns();
+        // }, 5000);
+        // setIntervalId(newIntervalId);
     };
 
 
