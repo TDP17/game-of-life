@@ -11,7 +11,7 @@ import { cellStateGrid, xBoundaryArray, yBoundaryArray } from '../utils/GridFunc
 import './Cell.css'
 
 const Cell = ({ i, j }) => {
-    console.log("Cell reval");
+    // console.log("Cell reval");
     const [on, setOn] = useState(false);
     const { iteration } = useContext(IterationContext);
 

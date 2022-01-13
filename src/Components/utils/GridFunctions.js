@@ -3,6 +3,8 @@ CSGU - cellStateGridUpdate function
 */
 import Cell from '../Game/Cell.js';
 
+/* EXTRA VARS */
+export let intervalID = { id: 0 };
 
 /* GRID VARS */
 export let cellStateGrid = [];
@@ -18,8 +20,6 @@ export const initializeGrids = (rows, columns) => {
     cellStateGrid = Array.from(Array(rows), () => new Array(columns).fill(false));
 
     neighbourCountGrid = Array.from(Array(rows), () => new Array(columns).fill(0));
-
-    console.log(cellStateGrid);
 };
 
 export const resetGrids = (rows, columns) => {
@@ -33,12 +33,12 @@ export const resetGrids = (rows, columns) => {
 
 // Creates and displays grid, creation fired only once
 let isGridCreated = false;
-export const displayGridCells = (rows, columns, changeCells, cngrid, cnrow) => {
+export const displayGridCells = (rows, columns, iterationState, iterationCounter, cngrid, cnrow) => {
     if (!isGridCreated) {
         for (let i = 0; i < rows; i++) {
             const currentRow = [];
             for (let j = 0; j < columns; j++)
-                currentRow.push(<Cell key={Math.random()} i={i} j={j} changeCells={changeCells} />);
+                currentRow.push(<Cell key={Math.random()} i={i} j={j} iterationState={iterationState} iterationCounter={iterationCounter} />);
             displayGrid.push(currentRow);
         }
         isGridCreated = true;
@@ -125,6 +125,7 @@ export const countNeighbours = (rows, columns) => {
 };
 
 // O(n^2) look into boxing the live cells and then searching in vicinity --> O(nlogn)?
+export let shouldReset = false;
 export const cellStateGridUpdate = (rows, columns) => {
     // console.log("Called 2");
     const iStart = (gridBoundaries.top - 1) < 0 ? 0 : (gridBoundaries.top - 1),
@@ -157,4 +158,20 @@ export const cellStateGridUpdate = (rows, columns) => {
     for (const { i, j } of decPair) {
         decrementNeighbours(neighbourCountGrid, i, j);
     }
+
+    let innerShouldReset = true;
+    for (let i = iStart; i <= iEnd; i++) {
+        for (let j = jStart; j <= jEnd; j++) {
+            if (cellStateGrid[i][j] === true) {
+                innerShouldReset = false;
+                break;
+            }
+        }
+    }
+    if (innerShouldReset) {
+        shouldReset = true;
+        resetGrids(rows, columns);
+    }
+    else
+        shouldReset = false;
 }

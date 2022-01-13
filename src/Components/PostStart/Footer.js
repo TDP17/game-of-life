@@ -2,15 +2,12 @@ import React from 'react'
 
 import './Footer.css'
 
-const Footer = ({ start, reset }) => {
+const Footer = ({ toggle, reset, iterationState }) => {
     return (
         <div className="footer">
-            <button className="start-free" onClick={start}>
-                Start
+            <button className="start-free" onClick={toggle}>
+                {iterationState ? 'Stop' : 'Start'}
             </button>
-            {/* <button className="stop-free" onClick={stop}> */}
-                {/* Stop */}
-            {/* </button> */}
             <button className="clear-free" onClick={reset}>
                 Clear
             </button>

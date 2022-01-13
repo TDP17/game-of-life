@@ -12,9 +12,9 @@ import { initializeGrids } from '../utils/GridFunctions';
 import './Free.css';
 
 const Free = () => {
-    console.log("FR");
-    const rows = 5;
-    const columns = 5;
+    // console.log("FR");
+    const rows = 50;
+    const columns = 50;
 
     initializeGrids(rows, columns);
 
