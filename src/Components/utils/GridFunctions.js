@@ -3,25 +3,49 @@ CSGU - cellStateGridUpdate function
 */
 import Cell from '../Game/Cell.js';
 
-import { gridBoundaries } from './GridBoundaries.js';
 
-// Created a blank grid which serves as a canvas and returns it
-export const createBlankGrid = (rows, columns, cellStateGrid, flag, setFlag) => {
-    const grid = [];
-    for (let i = 0; i < rows; i++) {
-        const currentRow = [];
-        for (let j = 0; j < columns; j++)
-            currentRow.push(<Cell key={Math.random()} i={i} j={j} cellStateGrid={cellStateGrid} flag={flag} setFlag={setFlag} />);
-        grid.push(currentRow);
-    }
-    return grid;
+/* GRID VARS */
+export let cellStateGrid = [];
+export let neighbourCountGrid = [];
+export let displayGrid = [];
+
+/* BOUNDARY VARS */
+export let gridBoundaries = { top: 0, right: 0, bottom: 0, left: 0 };
+export let xBoundaryArray = [];
+export let yBoundaryArray = [];
+
+export const initializeGrids = (rows, columns) => {
+    cellStateGrid = Array.from(Array(rows), () => new Array(columns).fill(false));
+
+    neighbourCountGrid = Array.from(Array(rows), () => new Array(columns).fill(0));
+
+    console.log(cellStateGrid);
+};
+
+export const resetGrids = (rows, columns) => {
+    cellStateGrid = [];
+    neighbourCountGrid = [];
+    xBoundaryArray = [];
+    yBoundaryArray = [];
+    runCountNeighbour = false;
+    initializeGrids(rows, columns);
 }
 
-// Displays the blank grid passed as parameter, cngrid and cnrow are classnames for styling
-export const displayBlankGrid = (grid, cngrid, cnrow) => {
+// Creates and displays grid, creation fired only once
+let isGridCreated = false;
+export const displayGridCells = (rows, columns, changeCells, cngrid, cnrow) => {
+    if (!isGridCreated) {
+        for (let i = 0; i < rows; i++) {
+            const currentRow = [];
+            for (let j = 0; j < columns; j++)
+                currentRow.push(<Cell key={Math.random()} i={i} j={j} changeCells={changeCells} />);
+            displayGrid.push(currentRow);
+        }
+        isGridCreated = true;
+    }
     return (
         <div className={`${cngrid}`}>
-            {grid.map(row => {
+            {displayGrid.map(row => {
                 return (
                     <div key={Math.random()} className={`${cnrow}`}>
                         {row.map(cell => {
@@ -36,18 +60,6 @@ export const displayBlankGrid = (grid, cngrid, cnrow) => {
     )
 };
 
-// Creates a logical 2D like array for computation and iteration and returns it (mb less resource consuming than maintaing a state)
-export const createCellStateGrid = (rows, columns) => {
-    const cellStateGrid = Array.from(Array(rows), () => new Array(columns).fill(false));
-    return cellStateGrid;
-}
-
-export const createNeighbourCountGrid = (rows, columns) => {
-    const neighbourCountGrid = Array.from(Array(rows), () => new Array(columns).fill(0));
-    return neighbourCountGrid;
-}
-
-// This section is very, very ugly and slow but works, refactor someday
 const incrementNeighbour = (neighbourCountGrid, x, y) => {
     if (neighbourCountGrid[x] !== undefined)
         if (neighbourCountGrid[x][y] !== undefined)
@@ -82,17 +94,25 @@ const decrementNeighbours = (neighbourCountGrid, i, j) => {
     decrementNeighbour(neighbourCountGrid, i + 1, j + 1);
 }
 
+const initializeBoundaries = () => {
+    gridBoundaries.top = Math.min(...yBoundaryArray);
+    gridBoundaries.bottom = Math.max(...yBoundaryArray);
+    gridBoundaries.left = Math.min(...xBoundaryArray);
+    gridBoundaries.right = Math.max(...xBoundaryArray);
+}
+
 /* 
-Should be fired only once when the button is clicked for the first time
-Otherwise csgu function takes care of updating cellstate and neighbour count grids
+*Should be fired only once when the button is clicked for the first time
+*Otherwise cellstategridupdate function takes care of updating cellstate and neighbour count grids
 */
-let fired = false;
-export const countNeighbours = (rows, columns, cellStateGrid, neighbourCountGrid) => {
-    const iStart = (gridBoundaries.top - 1) < 0 ? 0 : (gridBoundaries.top - 1), 
-    iEnd = (gridBoundaries.bottom + 1) > rows - 1 ? rows - 1 : (gridBoundaries.bottom + 1), 
-    jStart = (gridBoundaries.left - 1) < 0 ? 0 : (gridBoundaries.left - 1), 
-    jEnd = (gridBoundaries.right + 1) > columns - 1 ? columns - 1 : (gridBoundaries.right + 1);
-    if (!fired) {
+let runCountNeighbour = false;
+export const countNeighbours = (rows, columns) => {
+    if (!runCountNeighbour) {
+        initializeBoundaries();
+        const iStart = (gridBoundaries.top - 1) < 0 ? 0 : (gridBoundaries.top - 1),
+            iEnd = (gridBoundaries.bottom + 1) > rows - 1 ? rows - 1 : (gridBoundaries.bottom + 1),
+            jStart = (gridBoundaries.left - 1) < 0 ? 0 : (gridBoundaries.left - 1),
+            jEnd = (gridBoundaries.right + 1) > columns - 1 ? columns - 1 : (gridBoundaries.right + 1);
         for (let i = iStart; i <= iEnd; i++) {
             for (let j = jStart; j <= jEnd; j++) {
                 if (cellStateGrid[i][j]) {
@@ -100,18 +120,17 @@ export const countNeighbours = (rows, columns, cellStateGrid, neighbourCountGrid
                 }
             }
         }
-        fired = true;
+        runCountNeighbour = true;
     }
 };
 
 // O(n^2) look into boxing the live cells and then searching in vicinity --> O(nlogn)?
-export const cellStateGridUpdate = (rows, columns, cellStateGrid, neighbourCountGrid) => {
-    console.log(neighbourCountGrid);
-
-    const iStart = (gridBoundaries.top - 1) < 0 ? 0 : (gridBoundaries.top - 1), 
-    iEnd = (gridBoundaries.bottom + 1) > rows - 1 ? rows - 1 : (gridBoundaries.bottom + 1), 
-    jStart = (gridBoundaries.left - 1) < 0 ? 0 : (gridBoundaries.left - 1), 
-    jEnd = (gridBoundaries.right + 1) > columns - 1 ? columns - 1 : (gridBoundaries.right + 1);
+export const cellStateGridUpdate = (rows, columns) => {
+    // console.log("Called 2");
+    const iStart = (gridBoundaries.top - 1) < 0 ? 0 : (gridBoundaries.top - 1),
+        iEnd = (gridBoundaries.bottom + 1) > rows - 1 ? rows - 1 : (gridBoundaries.bottom + 1),
+        jStart = (gridBoundaries.left - 1) < 0 ? 0 : (gridBoundaries.left - 1),
+        jEnd = (gridBoundaries.right + 1) > columns - 1 ? columns - 1 : (gridBoundaries.right + 1);
 
     const incPair = [];
     const decPair = [];

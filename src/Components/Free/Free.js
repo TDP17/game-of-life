@@ -1,59 +1,29 @@
-import React, { useContext, useMemo, useState } from 'react';
+/*
+ * This is the parent component for the free mode - used for initializations
+ * This should never re-render due to state/context changes
+*/
+import React from 'react';
 
-import Footer from '../PostStart/Footer';
 import Header from '../PostStart/Header';
 import FreeGrid from './FreeGrid';
 
-import { createBlankGrid, createCellStateGrid, createNeighbourCountGrid, countNeighbours, cellStateGridUpdate } from '../utils/GridFunctions';
-import IterationContext from '../utils/IterationContextProvider.js';
-
+import { initializeGrids } from '../utils/GridFunctions';
 
 import './Free.css';
 
 const Free = () => {
-    console.log("Free reval");
-    const [flag, setFlag] = useState(false);
-    const [intervalId, setIntervalId] = useState(0);
-
-    const { nextIteration } = useContext(IterationContext);
-
+    console.log("FR");
     const rows = 5;
     const columns = 5;
 
-    const cellStateGrid = useMemo(() => createCellStateGrid(rows, columns), [])
-    const neighbourCountGrid = useMemo(() => createNeighbourCountGrid(rows, columns), [])
-
-    const grid = useMemo(() => createBlankGrid(rows, columns, cellStateGrid, flag, setFlag), [cellStateGrid, flag])
-
-    const startFreeFns = () => {
-        countNeighbours(rows, columns, cellStateGrid, neighbourCountGrid);
-        cellStateGridUpdate(rows, columns, cellStateGrid, neighbourCountGrid);
-        console.log(neighbourCountGrid);
-        nextIteration();
-    }
-
-    const startFree = () => {
-        startFreeFns();
-        // if (intervalId) {
-        //     clearInterval(intervalId);
-        //     setIntervalId(0);
-        //     return;
-        // }
-        // const newIntervalId = setInterval(() => {
-        //     startFreeFns();
-        // }, 5000);
-        // setIntervalId(newIntervalId);
-    };
-
-
+    initializeGrids(rows, columns);
 
     return (
         <div className="free-mode-container">
             <Header />
-            <FreeGrid grid={grid} />
-            <Footer start={startFree} />
+            <FreeGrid rows={rows} columns={columns}/>
         </div>
     )
 }
 
-export default React.memo(Free);
+export default Free;
