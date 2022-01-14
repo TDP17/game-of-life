@@ -40,7 +40,7 @@ const FreeGrid = ({ update, rows, columns }) => {
         const newIntervalID = setInterval(() => {
             startFreeFns();
             setIterationCounter(p => p + 1);
-        }, 1000);
+        }, 50);
         intervalID.id = newIntervalID;
     };
 

@@ -127,24 +127,29 @@ export const countNeighbours = (rows, columns) => {
 // O(n^2) look into boxing the live cells and then searching in vicinity --> O(nlogn)?
 export let shouldReset = false;
 export const cellStateGridUpdate = (rows, columns) => {
-    // console.log("Called 2");
+    initializeBoundaries();
     const iStart = (gridBoundaries.top - 1) < 0 ? 0 : (gridBoundaries.top - 1),
         iEnd = (gridBoundaries.bottom + 1) > rows - 1 ? rows - 1 : (gridBoundaries.bottom + 1),
         jStart = (gridBoundaries.left - 1) < 0 ? 0 : (gridBoundaries.left - 1),
         jEnd = (gridBoundaries.right + 1) > columns - 1 ? columns - 1 : (gridBoundaries.right + 1);
 
-    const incPair = [];
-    const decPair = [];
+    const incPairI = [];
+    const incPairJ = [];
+    const decPairI = [];
+    const decPairJ = [];
 
+    console.log(iStart, iEnd, jStart, jEnd);
     for (let i = iStart; i <= iEnd; i++) {
         for (let j = jStart; j <= jEnd; j++) {
             if (!cellStateGrid[i][j] && neighbourCountGrid[i][j] === 3) {
                 cellStateGrid[i][j] = true;
-                incPair.push({ i, j });
+                incPairI.push(i);
+                incPairJ.push(j);
             }
             else if (cellStateGrid[i][j] && (neighbourCountGrid[i][j] < 2 || neighbourCountGrid[i][j] > 3)) {
                 cellStateGrid[i][j] = false;
-                decPair.push({ i, j });
+                decPairI.push(i);
+                decPairJ.push(j);
             }
             // For debug purpose only
             // else {
@@ -152,12 +157,43 @@ export const cellStateGridUpdate = (rows, columns) => {
             // }
         }
     }
-    for (const { i, j } of incPair) {
-        incrementNeighbours(neighbourCountGrid, i, j);
+
+    // Remove all of dec pair - todo
+    for (let k = 0; k < decPairI.length; k++) {
+        const idx = yBoundaryArray.indexOf(decPairI[k]);
+        if (idx > -1) {
+            yBoundaryArray.splice(idx, 1);
+        }
     }
-    for (const { i, j } of decPair) {
-        decrementNeighbours(neighbourCountGrid, i, j);
+    for (let k = 0; k < decPairJ.length; k++) {
+        const idx = xBoundaryArray.indexOf(decPairJ[k]);
+        if (idx > -1) {
+            xBoundaryArray.splice(idx, 1);
+        }
     }
+
+    // Add largest and smallest i,j of incPair to boundary array
+    if (incPairI.length !== 0) {
+        const imaxtemp = Math.max(...incPairI);
+        const imintemp = Math.min(...incPairI);
+        yBoundaryArray.push(imaxtemp);
+        yBoundaryArray.push(imintemp);
+    }
+    if (incPairJ.length !== 0) {
+        const jmaxtemp = Math.max(...incPairJ);
+        const jmintemp = Math.min(...incPairJ);
+        xBoundaryArray.push(jmaxtemp);
+        xBoundaryArray.push(jmintemp);
+    }
+
+    for (let k = 0; k < incPairI.length; k++) {
+        incrementNeighbours(neighbourCountGrid, incPairI[k], incPairJ[k]);
+    }
+    for (let k = 0; k < decPairI.length; k++) {
+        decrementNeighbours(neighbourCountGrid, decPairI[k], decPairJ[k]);
+    }
+
+    // console.log("After csgu", neighbourCountGrid, cellStateGrid);
 
     let innerShouldReset = true;
     for (let i = iStart; i <= iEnd; i++) {
