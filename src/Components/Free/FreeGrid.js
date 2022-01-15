@@ -1,34 +1,22 @@
 import React, { useState } from 'react'
 import Footer from '../PostStart/Footer';
 
-import { displayGridCells, countNeighbours, cellStateGridUpdate, resetGrids, intervalID, shouldReset } from '../utils/GridFunctions';
+import { cellStateGrid, neighbourCountGrid, displayGridCells,  cellStateGridUpdate, clearFunction, intervalID, shouldReset, resetFunction, resetState } from '../utils/GridFunctions';
 
 import './FreeGrid.css';
 
-const FreeGrid = ({ update, rows, columns }) => {
+const FreeGrid = ({ rows, columns }) => {
     // console.log("FGR");
     const [iterationState, setIterationState] = useState(false);
     const [iterationCounter, setIterationCounter] = useState(0);
     // const [intervalID, setIntervalID] = useState(0);
 
     const startFreeFns = () => {
-        countNeighbours(rows, columns);
+        resetState();
         cellStateGridUpdate(rows, columns);
         if (shouldReset)
-            resetFree();
+            clearFree();
     }
-
-    // const stopFree = () => {
-    //     clearInterval(intervalId);
-    //     setIntervalId(0);
-    // };
-
-    // const clearFree = () => {
-    //     cellStateGrid = Array.from(Array(rows), () => new Array(columns).fill(false));
-    //     neighbourCountGrid = Array.from(Array(rows), () => new Array(columns).fill(0));
-    //     console.log(cellStateGrid, neighbourCountGrid);
-    //     setFlag(false);
-    // };
 
     const toggleFree = () => {
         setIterationState(p => !p);
@@ -40,13 +28,22 @@ const FreeGrid = ({ update, rows, columns }) => {
         const newIntervalID = setInterval(() => {
             startFreeFns();
             setIterationCounter(p => p + 1);
-        }, 50);
+        }, 300);
         intervalID.id = newIntervalID;
     };
 
     const resetFree = () => {
-        resetGrids(rows, columns);
-        setIterationCounter(prev => prev + 1);
+        resetFunction(rows, columns);
+        console.log(neighbourCountGrid, cellStateGrid);
+        setIterationCounter(p => p === 1 ? 0 : 1);
+        setIterationState(false);
+        clearInterval(intervalID.id);
+        intervalID.id = 0;
+    }
+
+    const clearFree = () => {
+        clearFunction(rows, columns);
+        setIterationCounter(p => p === 1 ? 0 : 1);
         setIterationState(false);
         clearInterval(intervalID.id);
         intervalID.id = 0;
@@ -57,7 +54,7 @@ const FreeGrid = ({ update, rows, columns }) => {
             <div className="free-grid-container">
                 {displayGridCells(rows, columns, iterationState, iterationCounter, "free-grid", "free-grid-row")}
             </div>
-            <Footer toggle={toggleFree} reset={resetFree} iterationState={iterationState} />
+            <Footer toggle={toggleFree} reset={resetFree} clear={clearFree} iterationState={iterationState} />
         </>
     )
 }

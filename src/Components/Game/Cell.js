@@ -2,24 +2,24 @@
  *Cell should only manage the cellstate grid - never touch neighbour grid with this
 */
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import IterationContext from '../utils/IterationContextProvider.js';
-
-import { cellStateGrid, xBoundaryArray, yBoundaryArray } from '../utils/GridFunctions.js';
+import { cellStateGrid, decrementNeighbours, incrementNeighbours, xBoundaryArray, yBoundaryArray } from '../utils/GridFunctions.js';
 
 import './Cell.css'
 
-const Cell = ({ i, j }) => {
-    // console.log("Cell reval");
+const Cell = ({ i, j, iterationCounter, iterationState }) => {
+    console.log("Cell reval");
     const [on, setOn] = useState(false);
-    const { iteration } = useContext(IterationContext);
 
     const handleCellClick = () => {
         if (!on) {
+            incrementNeighbours(i, j);
             xBoundaryArray.push(j);
             yBoundaryArray.push(i);
         }
+        else if (on)
+            decrementNeighbours(i, j);
         setOn(prev => !prev);
         cellStateGrid[i][j] = !cellStateGrid[i][j];
     }
@@ -29,12 +29,12 @@ const Cell = ({ i, j }) => {
             setOn(true);
         else
             setOn(false);
-    }, [i, j, iteration]);
+    }, [i, j, iterationCounter]);
 
     return (
-        <div className="cell" id={`cell${i}${j}`} style={{ backgroundColor: on ? "black" : "" }} onClick={handleCellClick}>
+        <div className="cell" id={`cell${i}${j}`} style={{ backgroundColor: on ? "black" : "gray" }} onClick={handleCellClick}>
         </div>
     )
 }
 
-export default React.memo(Cell);
+export default Cell;
