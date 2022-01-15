@@ -42,7 +42,7 @@ export const displayGridCells = (rows, columns, iterationState, iterationCounter
         for (let i = 0; i < rows; i++) {
             const currentRow = [];
             for (let j = 0; j < columns; j++)
-                currentRow.push(<Cell key={Math.random()} i={i} j={j} iterationCounter={iterationCounter} iterationState={iterationState} />);
+                currentRow.push(<Cell key={Math.random()} rows={rows} columns={columns} i={i} j={j} iterationCounter={iterationCounter} iterationState={iterationState} />);
             displayGrid.push(currentRow);
         }
         isGridCreated = true;
@@ -137,7 +137,6 @@ export const resetState = () => {
     if (!isResetStateSaved) {
         resetNeighbourCountGrid = JSON.parse(JSON.stringify(neighbourCountGrid));
         resetCellStateGrid = JSON.parse(JSON.stringify(cellStateGrid));
-        console.log("From cn", resetNeighbourCountGrid, resetCellStateGrid);
         resetXBoundaryArray = xBoundaryArray;
         resetYBoundaryArray = yBoundaryArray;
         isResetStateSaved = true;

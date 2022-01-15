@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Footer from '../PostStart/Footer';
+import Header from '../PostStart/Header';
 
-import { cellStateGrid, neighbourCountGrid, displayGridCells,  cellStateGridUpdate, clearFunction, intervalID, shouldReset, resetFunction, resetState } from '../utils/GridFunctions';
+import { cellStateGrid, neighbourCountGrid, displayGridCells, cellStateGridUpdate, clearFunction, intervalID, shouldReset, resetFunction, resetState } from '../utils/GridFunctions';
 
 import './FreeGrid.css';
 
@@ -28,7 +28,7 @@ const FreeGrid = ({ rows, columns }) => {
         const newIntervalID = setInterval(() => {
             startFreeFns();
             setIterationCounter(p => p + 1);
-        }, 300);
+        }, 1000);
         intervalID.id = newIntervalID;
     };
 
@@ -51,10 +51,10 @@ const FreeGrid = ({ rows, columns }) => {
 
     return (
         <>
+            <Header toggle={toggleFree} reset={resetFree} clear={clearFree} iterationState={iterationState} />
             <div className="free-grid-container">
                 {displayGridCells(rows, columns, iterationState, iterationCounter, "free-grid", "free-grid-row")}
             </div>
-            <Footer toggle={toggleFree} reset={resetFree} clear={clearFree} iterationState={iterationState} />
         </>
     )
 }

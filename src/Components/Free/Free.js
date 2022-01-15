@@ -4,7 +4,6 @@
 */
 import React from 'react';
 
-import Header from '../PostStart/Header';
 import FreeGrid from './FreeGrid';
 
 import { initializeGrids } from '../utils/GridFunctions';
@@ -19,7 +18,6 @@ const Free = () => {
 
     return (
         <div className="free-mode-container">
-            <Header />
             <FreeGrid rows={rows} columns={columns}/>
         </div>
     )

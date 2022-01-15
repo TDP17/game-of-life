@@ -3,13 +3,17 @@
 */
 
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components';
 
 import { cellStateGrid, decrementNeighbours, incrementNeighbours, xBoundaryArray, yBoundaryArray } from '../utils/GridFunctions.js';
 
-import './Cell.css'
+const StyledCell = styled.div`
+    width: ${(props => 100/props.columns)}%;
+    aspect-ratio:1/1;
+    border: 0.1vw solid lightgray;
+`;
 
-const Cell = ({ i, j, iterationCounter, iterationState }) => {
-    console.log("Cell reval");
+const Cell = ({ rows, columns, i, j, iterationCounter, iterationState }) => {
     const [on, setOn] = useState(false);
 
     const handleCellClick = () => {
@@ -31,9 +35,10 @@ const Cell = ({ i, j, iterationCounter, iterationState }) => {
             setOn(false);
     }, [i, j, iterationCounter]);
 
+
+
     return (
-        <div className="cell" id={`cell${i}${j}`} style={{ backgroundColor: on ? "black" : "gray" }} onClick={handleCellClick}>
-        </div>
+        <StyledCell id={`cell${i}${j}`} style={{ backgroundColor: on ? "#4f6df5" : "white" }} onClick={handleCellClick} rows={rows} columns={columns}/>
     )
 }
 
