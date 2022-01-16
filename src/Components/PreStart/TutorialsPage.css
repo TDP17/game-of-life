@@ -1,18 +1,55 @@
-.rules-page {
-  height: fit-content;
-  width: fit-content;
-  padding: 1.5rem;
+.tutorial-container {
+  height: 80vh;
+  width: 65vw;
   display: flex;
   flex-direction: column;
-  background-color: #fbefd8;
+  align-items: center;
+  padding-bottom: 1em;
+  background-color: white;
   color: black;
+  overflow-y: scroll;
 }
 
-.rules-section {
-  margin-top: 1rem;
+.tutorial-header {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #4f6df5;
+  color: white;
+  padding: 1em;
+  margin-bottom: 1rem;
+}
+.tutorial-header h2 {
+  line-height: 1.6;
 }
 
-.rules-example {
+.tutorial-rules {
+  height: fit-content;
+  width: 90%;
+  margin-top: 1em;
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-top: 1px solid black;
+}
+.rule img {
+  margin-left: auto;
+  height: 100px;
+}
+
+.tutorial-explanation {
+  width: 90%;
+  padding: 1em;
+  border: 1px solid black;
+}
+/* .rules-example {
   height: 100px;
   width: 100px;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAAAXNSR0IArs4c6QAAA8hJREFUeF7tnb1LW1EYxp+bT28+6kdBi1WxUGq2FqVC3dqpQ0enLu3af0JwcXEoCM7uXbo4OGawoINgaUoVFF0MiaRBSdSbm9zcck5Rmup4zhshzxkV3ofzy3PPec+9T26chYWFEEIjm81idNTH3NwXTE5+F1FtNFzk8x+1ltLNZn+L6BaLz5DPf0CxmECtVoND0Ha4EzQdbcdZXDq4RttxlqrKzdAe247KBE3Qxgmw62DXYdxUuiC7DnYddpzFroP3Oqw4i5shN0MrxuJmyNukdoylq/JkaBHuv6UJmqCNE2DXwa7DuKl4BOfDWTumuqnKzdAy4OvyBE3Qxgmw6+hW17G4uCiWVMpkMhgZaWJ6eh1jY7+Mu+iugr7fh62tef2vmZl1pNNnIrrl8hNsb8+jXI6jXq/DWVlZEQMdjUaRTIZ48OAUfX11kQm321GcnT3SWv39p4hGmyK6vp/Suo2GgyAI4GxsfBIDrYTr9SEMDZ0glToXmbACXalMaC2lG4v5Irqel9G6nueg1WrB8TxXDPTu7lscHMxidvYrJiZ+iEzY911sbr7XWko3k6mK6JZKT7VuqRT/G3IMQ4iB3tl5h/39V72ZJiVoOwa/1d4RNEEbIXBvch10tJHP81YRLh3dOhnS0XS0EQJco3ste8elw8iFw82QSweXDjuXkqrKex322HZUJmiCNk6AJ0OeDI2bShdk18Guw46z2HXwUZYVZ3Ez5GZoxVjcDHvuy0K8e2fnSuIazTXajrPuzYHl6Oi5WFLp8PAlTk6mkMt9w/DwkR2y/1VtNpMoFN7ov+Zym3DdmohutfoYhcJrVKsxXF1dwVlb+ywGOgjiCIIoYrEmIpFAZMJhqEKGCa2lAo6OIzPddjuidZV+GIZwlpeXZZQBJJNJZLMBxsd/YmCgJAK61Yrj+PgFKpWHaDQaaLfbIroqouy6LprNptbtmTc57u1N4fz8XGeVJUYikcDg4CAuLy9765WZBG3ZXtddB0ETtHkC3fyeIR1t/vPsqMilQ/gJCx1NR5snwDXaPNM7KxI0QRsnwJMhj+DGTdURoGHXYYfvTVX20eyj7VmMXYc9th2VCZqgjRNge8f2zrip2N51402O7KPtGJl9dLd+OJKOpqPNE2AfbZ4p70czQNOlpBKzd3Yu51vZu9XVVbGQYyQSgeM4OmioEpZSQ+mqoTSldNU8la7SU/N1lpaWxGas0pUqUaqCf74v845QNWH1ll81Li4uxNKk8Xgc6XRaJ0l1Plr6d8FTqZROdXqeJ2JoBVqlOtXoZpr0D+Fm5dqwSLEmAAAAAElFTkSuQmCC");
@@ -22,11 +59,39 @@
 }
 
 .rules-iterations {
-    height: 100px;
-    width: 100px;
-    background: url("https://image.shutterstock.com/image-vector/digital-clock-number-3-led-260nw-1701405331.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+  height: 100px;
+  width: 100px;
+  background: url("https://image.shutterstock.com/image-vector/digital-clock-number-3-led-260nw-1701405331.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+} */
+
+@media only screen and (max-width: 768px) {
+  .rule img {
+    margin-left: auto;
+    height: 70px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .rule img {
+    margin-left: auto;
+    height: 50px;
+  }
+  .tutorial-container {
+    font-size: 0.8em;
   }
   
+  .tutorial-header h2 {
+    font-size: 1.5em;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .rule img {
+    margin-left: auto;
+    height: 30px;
+  }
+
+}

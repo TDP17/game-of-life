@@ -2,7 +2,7 @@
  *Cell should only manage the cellstate grid - never touch neighbour grid with this
 */
 
-import React, { useEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import styled from 'styled-components';
 
 import { cellStateGrid, decrementNeighbours, incrementNeighbours, xBoundaryArray, yBoundaryArray } from '../utils/GridFunctions.js';
@@ -28,7 +28,7 @@ const Cell = ({ rows, columns, i, j, iterationCounter, iterationState }) => {
         cellStateGrid[i][j] = !cellStateGrid[i][j];
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (cellStateGrid[i][j])
             setOn(true);
         else
