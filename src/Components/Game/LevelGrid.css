@@ -1,0 +1,31 @@
+.level-main-container {
+  display: flex;
+  width: 100%;
+  height: 89%;
+}
+
+.level-grid-container {
+  height: 100%;
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  align-items: center;
+  background-color: #4f6df5;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+.level-grid {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  overflow-y: scroll;
+}
+
+.level-grid-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  width: 100%;
+}

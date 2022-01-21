@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
 import Header from '../PostStart/Header';
 
-import { cellStateGrid, neighbourCountGrid, displayGridCells, cellStateGridUpdate, clearFunction, intervalID, shouldReset, resetFunction, resetState } from '../utils/GridFunctions';
+import { displayGridCells, cellStateGridUpdate, clearFunction, intervalID, shouldClear, resetFunction, resetState } from '../utils/GridFunctions';
 
 import './FreeGrid.css';
 
 const FreeGrid = ({ rows, columns }) => {
-    // console.log("FGR");
     const [iterationState, setIterationState] = useState(false);
     const [iterationCounter, setIterationCounter] = useState(0);
-    // const [intervalID, setIntervalID] = useState(0);
 
     const startFreeFns = () => {
         resetState();
         cellStateGridUpdate(rows, columns);
-        if (shouldReset)
+        if (shouldClear)
             clearFree();
     }
 
@@ -34,7 +32,6 @@ const FreeGrid = ({ rows, columns }) => {
 
     const resetFree = () => {
         resetFunction(rows, columns);
-        console.log(neighbourCountGrid, cellStateGrid);
         setIterationCounter(p => p === 1 ? 0 : 1);
         setIterationState(false);
         clearInterval(intervalID.id);

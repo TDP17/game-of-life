@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { cellStateGrid, decrementNeighbours, incrementNeighbours, xBoundaryArray, yBoundaryArray } from '../utils/GridFunctions.js';
 
 const StyledCell = styled.div`
-    width: ${(props => 100/props.columns)}%;
+    width: ${(props => 100 / props.columns)}%;
     aspect-ratio:1/1;
     border: 0.1vw solid lightgray;
 `;
@@ -22,8 +22,17 @@ const Cell = ({ rows, columns, i, j, iterationCounter, iterationState }) => {
             xBoundaryArray.push(j);
             yBoundaryArray.push(i);
         }
-        else if (on)
+        else if (on) {
             decrementNeighbours(i, j);
+            let idx = yBoundaryArray.indexOf(i);
+            if (idx > -1) {
+                yBoundaryArray.splice(idx, 1);
+            }
+            idx = xBoundaryArray.indexOf(j);
+            if (idx > -1) {
+                xBoundaryArray.splice(idx, 1);
+            }
+        }
         setOn(prev => !prev);
         cellStateGrid[i][j] = !cellStateGrid[i][j];
     }
@@ -38,7 +47,7 @@ const Cell = ({ rows, columns, i, j, iterationCounter, iterationState }) => {
 
 
     return (
-        <StyledCell id={`cell${i}${j}`} style={{ backgroundColor: on ? "#4f6df5" : "white" }} onClick={handleCellClick} rows={rows} columns={columns}/>
+        <StyledCell id={`cell${i}${j}`} style={{ backgroundColor: on ? "#4f6df5" : "white" }} onClick={handleCellClick} rows={rows} columns={columns} />
     )
 }
 

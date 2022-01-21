@@ -17,17 +17,21 @@ const Header = ({ toggle, reset, clear, iterationState }) => {
                 <button className="header-exit" onClick={() => { navigate("/") }} >
                     <KeyboardBackspaceIcon />
                 </button>
-                <p className="header-game">&nbsp;&nbsp;John Conway's Game Of Life</p>   
+                <p className="header-game">&nbsp;&nbsp;John Conway's Game Of Life</p>
             </div>
             <button className="start-free" onClick={toggle}>
                 <PlayArrowIcon />{iterationState ? 'Stop' : 'Start'}
             </button>
-            <button className="reset-free" onClick={reset}>
-                <RestartAltIcon />Reset
-            </button>
-            <button className="clear-free" onClick={clear}>
-                <ClearIcon />Clear
-            </button>
+            {reset &&
+                <button className="reset-free" onClick={reset}>
+                    <RestartAltIcon />Reset
+                </button>
+            }
+            {clear &&
+                <button className="clear-free" onClick={clear}>
+                    <ClearIcon />Clear
+                </button>
+            }
         </div>
     )
 }

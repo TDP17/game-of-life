@@ -1,7 +1,6 @@
 .free-grid-container {
   height: 89%;
   width:100%;
-  /* min-width: 768px; */
   max-width: 1280px;
   overflow-y: scroll;
   border: 5px solid black;

@@ -9,20 +9,17 @@ import {
 import './index.css';
 
 import App from './App';
-import Game from './Components/PostStart/Game';
+import GameController from './Components/Game/GameController';
 import Free from './Components/Free/Free';
 
-import { LevelContextProvider } from './Components/utils/LevelContext';
 
 ReactDOM.render(
   <BrowserRouter >
-    <LevelContextProvider>
         <Routes>
           <Route path="/" exact element={<App />} />
-          <Route path="/game" element={<Game />} />
+          <Route path="/game" element={<GameController />} />
           <Route path="/free" element={<Free />} />
         </Routes>
-    </LevelContextProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );

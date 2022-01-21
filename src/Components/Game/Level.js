@@ -1,22 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import LevelGrid from './LevelGrid';
+
+import { clearFunction, initializeGrids } from '../utils/GridFunctions';
 
 import './Level.css';
 
-// import { createBlankGrid } from '../utils/GridFunctions.js';
-import InfoColumn from './InfoColumn';
+const Level = ({ goal, goalLogical, cellsOn, initialIterations }) => {
+    const rows = 15;
+    const columns = 25;
 
-const Level = () => {
-    console.log("Level reval");
-  
+    initializeGrids(rows, columns);
+
+    useEffect(() => {
+        return () => {
+            clearFunction(rows, columns);
+        };
+    }, []);
+
+
     return (
         <div className="level">
-            {/* Grid */}
-            <div className="level-grid-container">
-                {/* {createBlankGrid(20, 20)} */}
-                {/* {displayGrid("level-grid", "grid-row")} */}
-            </div>
-            {/* Prompt + Iterations */}
-            <InfoColumn />
+            <LevelGrid rows={rows} columns={columns} initialIterations={initialIterations} goal={goal} goalLogical={goalLogical} cellsOn={cellsOn} />
         </div>
     )
 }
