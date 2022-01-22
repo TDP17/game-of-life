@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import Level from './Level';
-import { grid_l1, b1 } from '../utils/LevelFunctions.js'
+import { grid_l1 } from '../utils/LevelFunctions.js'
 
 import L1 from './LevelImages/Level1.png';
 
@@ -13,7 +13,7 @@ const GameController = () => {
     const renderLevel = () => {
         switch (level) {
             case 1:
-                return <Level goal={L1} initialIterations={4} goalLogical={grid_l1} cellsOn={2} />
+                return <Level goal={L1} initialIterations={1} goalLogical={grid_l1} />
             default:
                 console.log("Todo component", level, typeof (level));
                 break;

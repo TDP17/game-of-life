@@ -1,9 +1,13 @@
-import Cell from '../Game/Cell.js';
+/**
+ * @todo Migrate to redux/toolkit 
+ * @todo Change rendering of cell 
+ */
+
+// import Cell from '../Game/Cell.js';
 
 export let intervalID = { id: 0 };
 export let cellStateGrid = [];
 export let neighbourCountGrid = [];
-export let displayGrid = [];
 export let gridBoundaries = { top: 0, right: 0, bottom: 0, left: 0 };
 export let xBoundaryArray = [];
 export let yBoundaryArray = [];
@@ -49,30 +53,17 @@ export const clearFunction = (rows, columns) => {
     yBoundaryArray = [];
     gridBoundaries.top = gridBoundaries.bottom = gridBoundaries.left = gridBoundaries.right = 0;
     isResetStateSaved = false;
-    isGridCreated = false;
-    displayGrid = [];
+    // isGridCreated = false;
+    // displayGrid = [];
 }
 
-let isGridCreated = false;
 /**
- * Creates a grid for display only once per mode/level and displays it when called
- * @param {*} rows 
- * @param {*} columns 
- * @param {*} iterationState Boolean containing if the game is running, passed to Cell
- * @param {*} iterationCounter Number containing the number of iterations that took place
- * @param {*} cngrid Classname of the grid 
+ * Display the grid passed to it
+ * @param {*} cngrid Classname of the grid
  * @param {*} cnrow Classname of the row
+ * @param {*} displayGrid Grid to be displayed
  */
-export const displayGridCells = (rows, columns, iterationState, iterationCounter, cngrid, cnrow) => {
-    if (!isGridCreated) {
-        for (let i = 0; i < rows; i++) {
-            const currentRow = [];
-            for (let j = 0; j < columns; j++)
-                currentRow.push(<Cell key={Math.random()} rows={rows} columns={columns} i={i} j={j} iterationCounter={iterationCounter} iterationState={iterationState} />);
-            displayGrid.push(currentRow);
-        }
-        isGridCreated = true;
-    }
+export const displayGridCells = (cngrid, cnrow, displayGrid) => {
     return (
         <div className={`${cngrid}`}>
             {displayGrid.map(row => {
@@ -124,7 +115,7 @@ export const decrementNeighbours = (i, j) => {
     decrementNeighbour(i + 1, j + 1);
 }
 
-const initializeBoundaries = () => {
+export const initializeBoundaries = () => {
     gridBoundaries.top = Math.min(...yBoundaryArray);
     gridBoundaries.bottom = Math.max(...yBoundaryArray);
     gridBoundaries.left = Math.min(...xBoundaryArray);
@@ -214,7 +205,7 @@ const shouldClearFunction = (iStart, iEnd, jStart, jEnd, rows, columns) => {
  */
 export const cellStateGridUpdate = (rows, columns) => {
     initializeBoundaries();
-    // console.log(JSON.stringify(neighbourCountGrid), cellStateGrid);
+    console.log(gridBoundaries);
     /**
      * Boundaries of the grid to be checked - the way I see it, boxing around the live cells (edges) 
      * will result in better performance since in most cases figures are synmetrical/box-like 
