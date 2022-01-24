@@ -5,7 +5,7 @@ import { clearFunction, initializeGrids } from '../utils/GridFunctions';
 
 import './Level.css';
 
-const Level = ({ goal, goalLogical, cellsOn, initialIterations }) => {
+const Level = ({ goal, goalLogical, cellsOn, level, setLevel, setScore }) => {
     const rows = 15;
     const columns = 25;
 
@@ -20,7 +20,7 @@ const Level = ({ goal, goalLogical, cellsOn, initialIterations }) => {
 
     return (
         <div className="level">
-            <LevelGrid rows={rows} columns={columns} initialIterations={initialIterations} goal={goal} goalLogical={goalLogical} cellsOn={cellsOn} />
+            <LevelGrid rows={rows} columns={columns} goal={goal} goalLogical={goalLogical} cellsOn={cellsOn} level={level} setLevel={setLevel} setScore={setScore} />
         </div>
     )
 }

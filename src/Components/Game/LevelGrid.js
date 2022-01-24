@@ -9,8 +9,15 @@ import { compareGrids } from '../utils/LevelFunctions.js';
 import './LevelGrid.css';
 
 let attempt = 1;
-const LevelGrid = ({ rows, columns, initialIterations, goal, goalLogical }) => {
+let initialIterations;
+const LevelGrid = ({ rows, columns, goal, goalLogical, level, setLevel, setScore }) => {
     const [iterationState, setIterationState] = useState(false);
+
+    if (level === 1)
+        initialIterations = 1;
+    else if (level === 2)
+        initialIterations = 2;
+
     const [iterationCounter, setIterationCounter] = useState(initialIterations);
 
     const levelGrid = useMemo(() => {
@@ -24,17 +31,18 @@ const LevelGrid = ({ rows, columns, initialIterations, goal, goalLogical }) => {
         return displayGrid;
     }, [rows, columns, iterationState]);
 
+
     const levelFailed = () => {
         attempt += 1;
-        alert(`Level failed, moving on to attempt ${attempt}, surely you'll get it one day`);
+        alert(`Level failed, moving on to attempt ${attempt}`);
     };
 
     const startLevelFns = () => {
         resetState();
         cellStateGridUpdate(rows, columns);
         if (shouldClear) {
-            levelFailed();
             clearLevel();
+            levelFailed();
         }
     }
 
@@ -58,26 +66,31 @@ const LevelGrid = ({ rows, columns, initialIterations, goal, goalLogical }) => {
 
     const clearLevel = () => {
         clearFunction(rows, columns);
+        setIterationState(false);
         setIterationCounter(p => p === initialIterations ? initialIterations - 1 : initialIterations);
         setIterationCounter(p => initialIterations);
-        setIterationState(false);
         clearInterval(intervalID.id);
         intervalID.id = 0;
     }
 
     useEffect(() => {
-        if (iterationCounter === 0) {
+        if (iterationCounter === 0 && iterationState) {
             clearInterval(intervalID.id);
             intervalID.id = 0;
             setIterationState(false);
             setTimeout(() => {
-                if (compareGrids(goalLogical, cellStateGrid))
+                if (compareGrids(goalLogical, cellStateGrid, level)) {
+                    setScore(s => (s + 100 / attempt))
+                    setLevel(l => l + 1);
                     alert("Nice job, excellente!");
+                }
                 else
-                    alert("Aw, try again");
+                    levelFailed();
+                clearFunction(rows, columns);
+                setIterationCounter(initialIterations);
             }, 1000);
         }
-    }, [iterationCounter]);
+    }, [iterationCounter, goalLogical, rows, columns]);
 
 
     return (
@@ -87,7 +100,7 @@ const LevelGrid = ({ rows, columns, initialIterations, goal, goalLogical }) => {
                 <div className="level-grid-container">
                     {displayGridCells("level-grid", "level-grid-row", levelGrid)}
                 </div>
-                <InfoColumn iterationCounter={iterationCounter} />
+                <InfoColumn initialIterations={initialIterations} goal={goal} setScore={setScore} />
             </section>
         </>
     );

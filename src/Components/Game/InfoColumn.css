@@ -1,11 +1,21 @@
 .info-column {
   height: 100%;
   width: 20%;
-  background-color: #4F6DF5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #4f6df5;
   border-top: 5px solid black;
   border-bottom: 5px solid black;
+  padding-top: 1em;
+  color: white;
+}
+
+.goal-image {
+  width: 70%;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 @media screen and (max-width: 710px) {
- 
 }

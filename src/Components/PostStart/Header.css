@@ -3,6 +3,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-color: #4f6df5;
 }
 .header div {

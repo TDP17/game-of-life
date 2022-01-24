@@ -205,7 +205,6 @@ const shouldClearFunction = (iStart, iEnd, jStart, jEnd, rows, columns) => {
  */
 export const cellStateGridUpdate = (rows, columns) => {
     initializeBoundaries();
-    console.log(gridBoundaries);
     /**
      * Boundaries of the grid to be checked - the way I see it, boxing around the live cells (edges) 
      * will result in better performance since in most cases figures are synmetrical/box-like 
