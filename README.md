@@ -2,3 +2,4 @@
 Based on John Conways cell automaton game
 
 Made by TDP17 2021-22 with ReactJS
+https://cgolife-fb6b3.web.app/
