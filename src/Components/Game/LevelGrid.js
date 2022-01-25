@@ -100,7 +100,7 @@ const LevelGrid = ({ rows, columns, goal, goalLogical, level, setLevel, setScore
                 <div className="level-grid-container">
                     {displayGridCells("level-grid", "level-grid-row", levelGrid)}
                 </div>
-                <InfoColumn initialIterations={initialIterations} goal={goal} setScore={setScore} />
+                <InfoColumn initialIterations={initialIterations} goal={goal} attempt={attempt} />
             </section>
         </>
     );

@@ -29,3 +29,14 @@
   height: fit-content;
   width: 100%;
 }
+
+@media only screen and (max-width: 1400px) {
+  .level-grid-container {
+    height: fit-content;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .level-main-container {
+    flex-direction: column;
+  }
+}

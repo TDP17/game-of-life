@@ -10,12 +10,27 @@
   padding-top: 1em;
   color: white;
 }
+.info-column h3 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding:1em;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+}
 
 .goal-image {
-  width: 70%;
+  width: 7em;
   margin-top: 1em;
   margin-bottom: 1em;
 }
 
-@media screen and (max-width: 710px) {
+@media only screen and (max-width: 992px) {
+  .info-column {
+    width: 100%;
+  }
+
+  .goal-image {
+    width: 5em;
+  }
 }
