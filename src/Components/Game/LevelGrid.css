@@ -30,12 +30,10 @@
   width: 100%;
 }
 
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1150px) {
   .level-grid-container {
     height: fit-content;
   }
-}
-@media only screen and (max-width: 992px) {
   .level-main-container {
     flex-direction: column;
   }
