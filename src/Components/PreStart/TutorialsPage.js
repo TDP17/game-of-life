@@ -8,11 +8,6 @@ import Rule3 from './Images/rule3.gif';
 import Rule4 from './Images/rule4.gif';
 
 const TutorialsPage = () => {
-    // <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
-    // <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
-    // <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
-    // <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
-
     return (
         <div className="tutorial-container">
             <section className="tutorial-header">
@@ -40,8 +35,9 @@ const TutorialsPage = () => {
             </section>
             <br />
             <section className="tutorial-explanation">
-                <p>Every level you will be given a blank grid, a prompt and number of iterations (representing steps in time). Your goal is to match the figure in the prompt when the given number of iterations hits zero</p>
+                <p>Every level you will be given a blank grid, a prompt and number of iterations (representing steps in time). Your goal is to match the figure in the prompt exactly in the given number of iterations</p>
                 {/* Show example level */}
+                <iframe src="https://www.youtube.com/embed/D6pmGLuPF-Y" width="100%" height="420px"></iframe>
             </section>
         </div>
     )

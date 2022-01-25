@@ -4,10 +4,14 @@ export const compareGrids = (idealGrid, userGrid, level) => {
     initializeBoundaries();
 
     let b;
-    if (level === 1)
-        b = { top: 0, right: 1, bottom: 1, left: 0 };
+    if (level === 0)
+        b = { top: 0, right: 3, bottom: 3, left: 0 };
+    else if (level === 1)
+        b = { top: 0, right: 0, bottom: 2, left: 0 };
     else if (level === 2)
         b = { top: 0, right: 4, bottom: 4, left: 0 };
+    else if (level === 3)
+        b = { top: 0, right: 2, bottom: 1, left: 0 };
 
     let heightIdeal = b.top - b.bottom;
     let heightUser = gridBoundaries.top - gridBoundaries.bottom;
@@ -40,9 +44,8 @@ export const compareGrids = (idealGrid, userGrid, level) => {
  */
 export const grid_l1 = Array.from(Array(15), () => new Array(25).fill(false));
 grid_l1[0][0] = true;
-grid_l1[0][1] = true;
 grid_l1[1][0] = true;
-grid_l1[1][1] = true;
+grid_l1[2][0] = true;
 
 export const grid_l2 = Array.from(Array(15), () => new Array(25).fill(false));
 grid_l2[0][2] = true;
@@ -53,3 +56,18 @@ grid_l2[2][4] = true;
 grid_l2[3][1] = true;
 grid_l2[3][3] = true;
 grid_l2[4][2] = true;
+
+export const grid_l3 = Array.from(Array(15), () => new Array(25).fill(false));
+grid_l3[0][1] = true;
+grid_l3[1][0] = true;
+grid_l3[1][1] = true;
+grid_l3[1][2] = true;
+
+export const grid_l0 = Array.from(Array(15), () => new Array(25).fill(false));
+grid_l0[0][1] = true;
+grid_l0[0][2] = true;
+grid_l0[1][0] = true;
+grid_l0[2][0] = true;
+grid_l0[1][3] = true;
+grid_l0[2][2] = true;
+grid_l0[3][1] = true;

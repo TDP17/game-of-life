@@ -5,21 +5,25 @@ import './GameEnd.css';
 const GameEnd = ({ score }) => {
     const highScore = () => {
         const hs = localStorage.getItem('highscore');
-        if (hs)
+        console.log(hs);
+        if (hs) {
+            if (hs < score)
+                localStorage.setItem('highscore', parseInt(score));
             return hs;
-        else localStorage.setItem('highscore', score);
-        return score;
+        }
+        else localStorage.setItem('highscore', parseInt(score));
+        return parseInt(score);
     }
 
     return (
         <div className="game-end-container">
             <div className="game-end">
                 <p>Congratulations on completing the game! I am very impressed!</p>
-                <p>You can now either enjoy replaying for a higher score or experiment in the free mode</p>
+                <p>You can now either enjoy <a onClick={() => window.location.reload()}><u>replaying</u></a> for a higher score or experiment in the free mode</p>
                 <section className="game-end-scores">
-                    <p>Current Score <div>{score}</div></p>
+                    <h3>Current Score <h4>{parseInt(score)}</h4></h3>
                     <hr />
-                    <p>High Score <div>{highScore()}</div></p>
+                    <h3>High Score <h4>{highScore()}</h4></h3>
                     <hr />
                 </section>
                 <a href="https://github.com/TDP17/game-of-life">Source Code</a>

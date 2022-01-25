@@ -8,15 +8,19 @@ import { compareGrids } from '../utils/LevelFunctions.js';
 
 import './LevelGrid.css';
 
-let attempt = 1;
 let initialIterations;
 const LevelGrid = ({ rows, columns, goal, goalLogical, level, setLevel, setScore }) => {
+    const [penalty, setPenalty] = useState(1);
     const [iterationState, setIterationState] = useState(false);
 
-    if (level === 1)
+    if (level === 0)
+        initialIterations = 2;
+    else if (level === 1)
         initialIterations = 1;
     else if (level === 2)
         initialIterations = 2;
+    else if (level === 3)
+        initialIterations = 1;
 
     const [iterationCounter, setIterationCounter] = useState(initialIterations);
 
@@ -33,8 +37,8 @@ const LevelGrid = ({ rows, columns, goal, goalLogical, level, setLevel, setScore
 
 
     const levelFailed = () => {
-        attempt += 1;
-        alert(`Level failed, moving on to attempt ${attempt}`);
+        alert(`Level failed, penalty multiplier is now ${penalty + 1}`);
+        setPenalty(a => a + 1);
     };
 
     const startLevelFns = () => {
@@ -80,7 +84,7 @@ const LevelGrid = ({ rows, columns, goal, goalLogical, level, setLevel, setScore
             setIterationState(false);
             setTimeout(() => {
                 if (compareGrids(goalLogical, cellStateGrid, level)) {
-                    setScore(s => (s + 100 / attempt))
+                    setScore(s => (s + 100 / penalty))
                     setLevel(l => l + 1);
                     alert("Nice job, excellente!");
                 }
@@ -100,7 +104,7 @@ const LevelGrid = ({ rows, columns, goal, goalLogical, level, setLevel, setScore
                 <div className="level-grid-container">
                     {displayGridCells("level-grid", "level-grid-row", levelGrid)}
                 </div>
-                <InfoColumn initialIterations={initialIterations} goal={goal} attempt={attempt} />
+                <InfoColumn initialIterations={initialIterations} goal={goal} penalty={penalty} />
             </section>
         </>
     );
